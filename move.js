@@ -57,6 +57,14 @@ onkeyup = z => {
       down = null;
     }
   } else {
+    clearInterval(left);
+    left = null;
+    clearInterval(right);
+    right = null;
+    clearInterval(down);
+    down = null;
+    clearInterval(up);
+    up = null;
     if (z.key == "c"){
       colorChangeMode = false;
       if (colorRight != null){
