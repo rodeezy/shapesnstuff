@@ -7,6 +7,7 @@ up = null;
 right = null;
 down = null;
 colorRight = null;
+colorLeft = null;
 
 function currentShape() {
   if (d.style.borderRadius === "50%"){
@@ -33,7 +34,9 @@ onkeydown = z => {
     }
   } else {
     if (z.key == "ArrowRight" && colorRight == null){
-      colorRight=setInterval(colorShiftRight,1);
+      colorRight = setInterval(colorShiftRight,1);
+    } else if (z.key == "ArrowLeft" && colorLeft == null){
+      colorLeft = setInterval(colorShiftLeft,1);
     }
   }
 }
@@ -60,9 +63,16 @@ onkeyup = z => {
         clearInterval(colorRight);
         colorRight = null;
       }
+      if (colorLeft != null){
+        clearInterval(colorLeft);
+        colorLeft = null;
+      }
     } else if (z.key == "ArrowRight"){
       clearInterval(colorRight);
       colorRight = null;
+    } else if (z.key == "ArrowLeft"){
+      clearInterval(colorLeft);
+      colorLeft = null;
     }
   }
 }
@@ -122,6 +132,34 @@ function colorShiftRight() {
   d.style.backgroundColor = createRgb(red, green, blue);
 }
 function colorShiftLeft() {
-
+  let red = extractRed();
+  let blue = extractBlue();
+  let green = extractGreen();
+  if (red === 255){
+    if (blue === 0){
+      green += 1;
+      if (green === 255) {
+        red -= 1;
+      }
+    } else {
+      blue -= 1;
+    }
+  } else if (green === 255){
+    if (red === 0){
+      blue += 1;
+      if (blue == 255){
+        green -= 1;
+      }
+    } else {
+      red -= 1;
+    }
+  } else {
+    if (green === 0){
+      red +=1
+    } else {
+      green -= 1
+    }
+  }
+  d.style.backgroundColor = createRgb(red, green, blue);
 }
 
