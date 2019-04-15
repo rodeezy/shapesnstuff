@@ -1,4 +1,5 @@
 d= document.createElement("div");
+d.id = 1
 document.body.appendChild(d);
 d.style.cssText = "background-color: rgb(255,0,1); border-radius: 50%; height: 50px; width: 50px; position: absolute; top: 0px; left: 0px;";
 
@@ -8,6 +9,8 @@ right = null;
 down = null;
 colorRight = null;
 colorLeft = null;
+smaller = null;
+bigger = null;
 
 function currentShape() {
   if (d.style.borderRadius === "50%"){
@@ -31,6 +34,18 @@ onkeydown = z => {
       currentShape() === "circle" ? makeSquare() : makeCircle();
     } else if (z.key == "h"){
       colorChangeMode = true;
+    } else if (z.key == "-" && smaller == null){
+      smaller=setInterval(function(){
+        d.style.width = parseInt(d.style.width.replace("px",""))-1+"px";
+        d.style.height = parseInt(d.style.height.replace("px",""))-1+"px";
+      },2);
+    } else if (z.key == "=" && bigger == null){
+      bigger=setInterval(function(){
+        d.style.width = parseInt(d.style.width.replace("px",""))+1+"px";
+        d.style.height = parseInt(d.style.height.replace("px",""))+1+"px";
+      },2);
+    } else if (z.key == "c"){
+      makeCopy();
     }
   } else {
     if (z.key == "ArrowRight" && colorRight == null){
@@ -55,6 +70,12 @@ onkeyup = z => {
     } else if (z.key == "ArrowDown"){
       clearInterval(down);
       down = null;
+    } else if (z.key == "-"){
+      clearInterval(smaller);
+      smaller = null;
+    } else if (z.key == "="){
+      clearInterval(bigger);
+      bigger = null;
     }
   } else {
     clearInterval(left);
@@ -169,5 +190,12 @@ function colorShiftLeft() {
     }
   }
   d.style.backgroundColor = createRgb(red, green, blue);
+}
+
+function makeCopy() {
+  let z = d.cloneNode();
+  z.id = parseInt(d.id) + 1;
+  document.body.appendChild(z);
+  d = z;
 }
 
