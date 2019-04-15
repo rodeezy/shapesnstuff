@@ -27,9 +27,9 @@ onkeydown = z => {
       up=setInterval(function(){d.style.top = parseInt(d.style.top.replace("px",""))-2+"px"},1);
     } else if (z.key == "ArrowDown" && down == null){
       down=setInterval(function(){d.style.top = parseInt(d.style.top.replace("px",""))+2+"px"},1);
-    } else if (z.key == " "){
+    } else if (z.key == "s"){
       currentShape() === "circle" ? makeSquare() : makeCircle();
-    } else if (z.key == "c"){
+    } else if (z.key == "h"){
       colorChangeMode = true;
     }
   } else {
@@ -65,7 +65,7 @@ onkeyup = z => {
     down = null;
     clearInterval(up);
     up = null;
-    if (z.key == "c"){
+    if (z.key == "h"){
       colorChangeMode = false;
       if (colorRight != null){
         clearInterval(colorRight);
